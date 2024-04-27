@@ -1,0 +1,136 @@
+//Main.java
+public class Main {
+
+    public static void main(String[] args) {
+
+        LinkedList myLinkedList = new LinkedList(1);
+        myLinkedList.append(2);
+
+        // (2) Items - Returns 2 Node
+        System.out.println(myLinkedList.removeLast().value);
+        // (1) Item - Returns 1 Node
+        System.out.println(myLinkedList.removeLast().value);
+        // (0) Items - Returns null
+        System.out.println(myLinkedList.removeLast());
+        
+        
+    	/*
+        	EXPECTED OUTPUT:
+        	----------------
+        	2
+        	1
+        	null
+
+     	*/
+
+    }
+
+}
+
+//LinkedList.java
+public class LinkedList {
+
+    private Node head;
+    private Node tail;
+    private int length;
+
+    class Node {
+        int value;
+        Node next;
+
+        Node(int value) {
+            this.value = value;
+        }
+    }
+
+    public LinkedList(int value) {
+        Node newNode = new Node(value);
+        head = newNode;
+        tail = newNode;
+        length = 1;
+    }
+
+    public Node getHead() {
+        return head;
+    }
+
+    public Node getTail() {
+        return tail;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.println(temp.value);
+            temp = temp.next;
+        }
+    }
+
+    public void printAll() {
+        if (length == 0) {
+            System.out.println("Head: null");
+            System.out.println("Tail: null");
+        } else {
+            System.out.println("Head: " + head.value);
+            System.out.println("Tail: " + tail.value);
+        }
+        System.out.println("Length:" + length);
+        System.out.println("\nLinked List:");
+        if (length == 0) {
+            System.out.println("empty");
+        } else {
+            printList();
+        }
+    }
+    
+    public void makeEmpty() {
+        head = null;
+        tail = null;
+        length = 0;
+    }
+
+    public void append(int value) {
+        Node newNode = new Node(value);
+        if (length == 0) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+        length++;
+    }
+
+    public Node removeLast() {
+        //if the length of the linked list is 0, return null
+        if(length == 0) return null;
+        
+        //start at the head node 
+        Node temp = head;
+        Node pre = head;
+        //iterate through the linked list until the last node is reached
+        while(temp.next != null) {
+            pre = temp;
+            //keep track of the second-to-last node
+            temp = temp.next;
+        }
+        //set the new tail node to be the second-to-last node
+        tail = pre;
+        //remove the reference to the former tail node 
+        tail.next = null;
+        //decrement the length of the linked list
+        length--;
+        //if the linked list is now empty, set head and tail to null
+        if (length == 0) {
+            head = null;
+            tail = null;
+        }
+        //return the removed node
+        return temp;
+    }
+
+}
