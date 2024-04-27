@@ -1,0 +1,101 @@
+//Main class Main.java
+public class Main {
+
+    public static void main(String[] args) {
+
+        LinkedList myLinkedList = new LinkedList(1);
+        myLinkedList.makeEmpty();
+        myLinkedList.append(1);
+        myLinkedList.append(2);
+
+
+        myLinkedList.printAll();
+
+    }
+}
+
+//LinkedList class LinkedList.java
+public class LinkedList {
+
+    private Node head;
+    private Node tail;
+    private int length;
+
+    class Node {
+        int value;
+        Node next;
+
+        Node(int value) {
+            this.value = value;
+        }
+    }
+
+    public LinkedList(int value) {
+        Node newNode = new Node(value);
+        head = newNode;
+        tail = newNode;
+        length = 1;
+    }
+
+    public Node getHead() {
+        return head;
+    }
+
+    public Node getTail() {
+        return tail;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void printList() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.println(temp.value);
+            temp = temp.next;
+        }
+    }
+
+    public void printAll() {
+        if (length == 0) {
+            System.out.println("Head: null");
+            System.out.println("Tail: null");
+        } else {
+            System.out.println("Head: " + head.value);
+            System.out.println("Tail: " + tail.value);
+        }
+        System.out.println("Length:" + length);
+        System.out.println("\nLinked List:");
+        if (length == 0) {
+            System.out.println("empty");
+        } else {
+            printList();
+        }
+    }
+    
+    public void makeEmpty() {
+        head = null;
+        tail = null;
+        length = 0;
+    }
+
+
+    public void append(int value) {
+//Create a new node with the given value
+        Node newNode = new Node(value);
+/*If the list is empty, have both head and tail point at the new node. The LinkedList could become empty if the original node was removed.*/
+        if (length == 0) {
+            head = newNode;
+            tail = newNode;
+        } else {
+/*If the list is not empty, set the next node of the current tail to the new node and update the tail to be the new node.*/
+            tail.next = newNode;
+            tail = newNode;
+        }
+//Increment the length of the list
+        length++;
+    }
+}
+
+
